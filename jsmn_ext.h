@@ -34,7 +34,6 @@ typedef struct {
 typedef struct {
     jsmn_ext_type type;
     int idx;
-    int size_arr;
 
     double val_double;
     int val_int;
