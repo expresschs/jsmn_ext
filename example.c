@@ -3,29 +3,28 @@
 
 int main()
 {
-    jsmn_ext jsmn;
-    jsmn_obj root;
-    int file_sz = 0;
-    char file_str[1024] = {0};
-
-    jsmn_obj obj0 = {0};
-    jsmn_obj obj1 = {0};
-    jsmn_obj obj2 = {0};
-    jsmn_obj obj3 = {0};
-    int size0 = 0;
-    int size1 = 0;
-    char str[32] = {0};
-
-    printf("................................................\n");
-    printf("A extension for jsmn, Make it easier to use.....\n");
-    printf("................................................\n");
+    printf(".....Make Jsmn Easier To Use.....\n");
 
     FILE* fp = fopen("sample.json", "rb");
     if (NULL != fp) {
+        int file_sz = 0;
+        char file_str[1024] = {0};
+        /* read file */
         if (0 != fseek(fp, 0, SEEK_END)) goto exit;
         if ((file_sz = ftell(fp)) <= 0) goto exit;
         if (0 != fseek(fp, 0, SEEK_SET)) goto exit;
         if (file_sz != fread(file_str, 1, file_sz, fp)) goto exit;
+
+        jsmn_ext jsmn = {0};
+        jsmn_obj root = {0};
+        jsmn_obj obj0 = {0};
+        jsmn_obj obj1 = {0};
+        jsmn_obj obj2 = {0};
+        jsmn_obj obj3 = {0};
+        int size0 = 0;
+        int size1 = 0;
+        char str[32] = {0};
+        /* parse json */
         if (JSMN_RET_OK != jsmnExt_Init(&jsmn, &root, file_str)) goto exit;
 
         obj0.val_str = str;
@@ -46,10 +45,10 @@ int main()
         size0 = jsmnExt_GetArrSize(&jsmn, &obj0);
         printf("members is json array, %d items \n", size0);
 
+        obj2.val_str = str;
+        obj2.len_str = sizeof(str);
         for (int i = 0; i < size0; i++) {
             if (JSMN_RET_OK != jsmnExt_GetArrItem(&jsmn, i, &obj1, &obj0)) goto exit;
-            obj2.val_str = str;
-            obj2.len_str = sizeof(str);
             if (JSMN_RET_OK != jsmnExt_GetObjItem(&jsmn, "name", &obj2, &obj1)) goto exit;
             printf("name:%s \n", obj2.val_str);
             if (JSMN_RET_OK != jsmnExt_GetObjItem(&jsmn, "age", &obj2, &obj1)) goto exit;
@@ -61,9 +60,9 @@ int main()
             size1 = jsmnExt_GetArrSize(&jsmn, &obj2);
             printf("powers is json array, %d items \n", size1);
 
+            obj3.val_str = str;
+            obj3.len_str = sizeof(str);
             for (int j = 0; j < size1; j++) {
-                obj3.val_str = str;
-                obj3.len_str = sizeof(str);
                 if (JSMN_RET_OK != jsmnExt_GetArrItem(&jsmn, j, &obj3, &obj2)) goto exit;
                 printf("%s \n", obj3.val_str);
             }
