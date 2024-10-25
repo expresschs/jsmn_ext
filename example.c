@@ -3,7 +3,7 @@
 
 int main()
 {
-    printf(".....Make Jsmn Easier To Use.....\n");
+    printf(".....Jsmn Extension.....\n");
 
     FILE* fp = fopen("sample.json", "rb");
     if (NULL != fp) {
